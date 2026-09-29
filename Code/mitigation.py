@@ -134,3 +134,23 @@ def hellinger_fidelity_dict(p, q):
     keys = set(p) | set(q)
     sp, sq = sum(p.values()), sum(q.values())
     return float(sum(np.sqrt(p.get(k, 0) / sp * q.get(k, 0) / sq) for k in keys) ** 2)
+
+
+# --------------------------------------------------------------------------- #
+# T-REx (twirled readout error extinction) on IBM hardware
+# --------------------------------------------------------------------------- #
+def trex_expectation(circuit, observable, backend, shots=8192):
+    """<observable> with T-REx readout mitigation via IBM Runtime EstimatorV2.
+
+    `circuit` must be transpiled for `backend` and have no final measurements;
+    `observable` is a SparsePauliOp on the circuit's virtual qubits.
+    """
+    from qiskit_ibm_runtime import EstimatorV2
+
+    est = EstimatorV2(mode=backend)
+    est.options.default_shots = shots
+    est.options.resilience_level = 0
+    est.options.resilience.measure_mitigation = True       # T-REx
+    est.options.twirling.enable_measure = True
+    obs = observable.apply_layout(circuit.layout)
+    return float(est.run([(circuit, obs)]).result()[0].data.evs)
