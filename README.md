@@ -50,7 +50,7 @@ Companion code by the first author: [mishaurooj/Quantum-Error-Mitigation-in-the-
 
 ## Author
 **Wajiha Rahim Khan**  
-[Google Scholar](https://scholar.google.com/citations?user=ctvOkbYAAAAJ) · [Email](mailto:wajihakhan906@gmail.com)
+[Google Scholar](https://scholar.google.com/citations?user=ctvOkbYAAAAJ)
 
 ## License
 MIT. See [LICENSE](LICENSE).
